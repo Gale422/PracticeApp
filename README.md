@@ -7,4 +7,4 @@
   - framework: [Tornado](https://sites.google.com/site/tornadowebja/)
 
 ## frontend
-- vue
+- nuxt.js
