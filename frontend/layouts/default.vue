@@ -1,11 +1,6 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      :clipped="clipped"
-      permanent
-      fixed
-      app
-    >
+    <v-navigation-drawer :clipped="clipped" permanent fixed app>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -23,11 +18,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
+    <v-app-bar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
@@ -41,7 +32,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       title: 'PracticeApp',
       clipped: true,
@@ -55,15 +46,15 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/welcome'
+          to: '/welcome',
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire'
-        }
-      ]
+          to: '/inspire',
+        },
+      ],
     }
-  }
+  },
 }
 </script>
