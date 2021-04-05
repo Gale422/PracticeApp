@@ -1,5 +1,2 @@
 # macOS が自動的に作成するファイル
 .DS_Store
-
-# node_modulesは不要
-frontend/node_modules
