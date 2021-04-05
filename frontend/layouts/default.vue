@@ -48,9 +48,14 @@ export default {
       fixed: false,
       items: [
         {
+          icon: 'mdi-home',
+          title: 'Home',
+          to: '/',
+        },
+        {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/'
+          to: '/welcome'
         },
         {
           icon: 'mdi-chart-bubble',
