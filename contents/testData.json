@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "name": "test name 0",
+    "type": "type 0",
+    "url": "url 0"
+  },
+  {
+    "id": 1,
+    "name": "test name 1",
+    "type": "type 1",
+    "url": "url 1"
+  },
+  {
+    "id": 2,
+    "name": "test name 2",
+    "type": "type 2",
+    "url": "url 2"
+  },
+  {
+    "id": 3,
+    "name": "test name 3",
+    "type": "type 3",
+    "url": "url 3"
+  },
+  {
+    "id": 4,
+    "name": "test name 4",
+    "type": "type 4",
+    "url": "url 4"
+  }
+]
