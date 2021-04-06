@@ -20,7 +20,7 @@ module.exports = {
     'no-extra-semi': 'error',
     // タグが1つで完結してもOK
     'vue/html-self-closing': 'off',
-    // タグの最後で開業しない
+    // タグの最後で改行しない
     // 'vue/html-closing-bracket-newline': [2, { multiline: 'never' }],
     // 不要なカッコは消す
     'no-extra-parens': 1,
