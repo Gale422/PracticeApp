@@ -16,6 +16,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    semi: ['error', 'always'],
+    'no-extra-semi': 'error',
     // タグが1つで完結してもOK
     'vue/html-self-closing': 'off',
     // タグの最後で開業しない
@@ -29,7 +31,8 @@ module.exports = {
       {
         // aタグの羅列などで変な風にならないようにする
         htmlWhitespaceSensitivity: 'ignore',
+        semi: true,
       },
     ],
   },
-}
+};

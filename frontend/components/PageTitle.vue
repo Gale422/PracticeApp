@@ -19,5 +19,5 @@ export default Vue.extend({
       required: true,
     },
   },
-})
+});
 </script>
