@@ -32,6 +32,7 @@ module.exports = {
         // aタグの羅列などで変な風にならないようにする
         htmlWhitespaceSensitivity: 'ignore',
         semi: true,
+        singleQuote: true,
       },
     ],
   },
