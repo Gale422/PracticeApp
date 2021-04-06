@@ -15,6 +15,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", controller.MainHandler),
+            (r"/data", controller.DataHandler),
         ]
         app_route = route_dirname()
         settings = dict(
