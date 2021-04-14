@@ -8,3 +8,9 @@
 
 ## frontend
 - nuxt.js
+
+## 起動
+
+```
+make run
+```
