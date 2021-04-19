@@ -28,17 +28,16 @@ remove: stop
 # DBのビルドに関するコマンド
 #####
 
+db-build:
+	docker build -t $(DB_NAME) ./database
+
 db: db-remove
 	docker run \
 	-d \
 	-p 3306:3306 \
-	-e MYSQL_DATABASE=practice_db \
-	-e MYSQL_USER=mysqluser \
-	-e MYSQL_PASSWORD=mysqlpass \
-	-e MYSQL_ROOT_PASSWORD=root \
 	--name ${DB_NAME} \
 	--network $(NETWORK_NAME) \
-	mysql:8.0.23
+	$(DB_NAME)
 
 db-stop:
 	-docker stop $(DB_NAME)
@@ -59,7 +58,7 @@ remnet: remove db-remove
 	-docker network rm $(NETWORK_NAME)
 
 # 起動しているコンテナを停止、削除後に再作成を行い、実行する
-run: clean net db build app ;
+run: clean net db-build db build app ;
 
 # 不要なボリューム、イメージ、コンテナを削除する
 clean:
