@@ -17,12 +17,22 @@ class DbConnector:
 
     def getAll(self):
         # カーソル作成
-        cur = self.conn.cursor(dictionary=True)
+        cur = self.__get_cursor()
         # SQL実行
-        cur.execute("SELECT * FROM test")
+        cur.execute("SELECT id, name FROM todoList ORDER BY id asc")
         # 全てのデータを取得
         rows = cur.fetchall()
+        cur.close()
         for row in rows:
             print(row)
-        cur.close()
+            print(row["id"])
+            cur = self.__get_cursor()
+            cur.execute("SELECT tag.name as name FROM tags LEFT JOIN tag ON tags.tag_id = tag.id WHERE todo_id = %s ORDER BY tags.order_index ASC", (row.get("id"), ))
+            tags = cur.fetchall()
+            print(tags)
+            row["tags"] = tags
+            cur.close()
         return rows
+
+    def __get_cursor(self):
+        return self.conn.cursor(dictionary=True)
