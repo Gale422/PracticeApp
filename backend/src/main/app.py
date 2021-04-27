@@ -16,16 +16,12 @@ define("port", default=8888, type=int)
 
 
 class Application(tornado.web.Application):
-
     def __init__(self):
         handlers = [
-            (r"/", controller.MainHandler),
-            (r"/data", controller.DataHandler),
+            (u"/data", controller.DataHandler),
+            (u"/todo/detail", controller.ToDoDetailHandler),
         ]
-        app_route = route_dirname()
         settings = dict(
-            template_path=os.path.join(app_route,  "templates"),
-            static_path=os.path.join(app_route,  "static"),
             debug=True,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
