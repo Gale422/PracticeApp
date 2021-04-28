@@ -8,31 +8,43 @@ class DbConnector:
             port='3306',
             user='mysqluser',
             password='mysqlpass',
-            database='practice_db'
+            database='practice_db',
+            charset='utf8'
         )
         # 再接続をしてくれる設定
         self.conn.ping(reconnect=True)
-        print('DBの接続確認')
-        print(self.conn.is_connected())
+        print('DB接続 = {}'.format(self.conn.is_connected()))
 
-    def getAll(self):
+    def __get_cursor(self):
+        return self.conn.cursor(dictionary=True)
+
+    def getToDoAll(self):
         # カーソル作成
         cur = self.__get_cursor()
         # SQL実行
-        cur.execute("SELECT id, name FROM todoList ORDER BY id asc")
+        cur.execute("SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list ORDER BY id asc")
         # 全てのデータを取得
         rows = cur.fetchall()
         cur.close()
         for row in rows:
-            print(row)
-            print(row["id"])
-            cur = self.__get_cursor()
-            cur.execute("SELECT tag.name as name FROM tags LEFT JOIN tag ON tags.tag_id = tag.id WHERE todo_id = %s ORDER BY tags.order_index ASC", (row.get("id"), ))
-            tags = cur.fetchall()
-            print(tags)
-            row["tags"] = tags
-            cur.close()
+            row["tags"] = self.getTagsByToDoId(row.get("id"))
         return rows
 
-    def __get_cursor(self):
-        return self.conn.cursor(dictionary=True)
+    def getToDoDetailByToDoId(self, id):
+        # カーソル作成
+        cur = self.__get_cursor()
+        # SQL実行
+        cur.execute("SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list WHERE id = %s", (id, ))
+        # データを1件取得
+        todo = cur.fetchone()
+        todo["tags"] = self.getTagsByToDoId(todo.get("id"))
+        print(todo)
+        return todo
+
+    def getTagsByToDoId(self, toDoId):
+        cur = self.__get_cursor()
+        cur.execute(
+            "SELECT tag.name as name FROM tags LEFT JOIN tag ON tags.tag_id = tag.id WHERE todo_id = %s ORDER BY tags.order_index ASC", (toDoId, ))
+        tags = cur.fetchall()
+        cur.close()
+        return tags
