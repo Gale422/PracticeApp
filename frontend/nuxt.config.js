@@ -1,3 +1,4 @@
+import path from 'path';
 import colors from 'vuetify/es5/util/colors';
 
 export default {
@@ -13,6 +14,19 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    /**
+     * webpackの設定の拡張を行う
+     * @see https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-build#extend
+     * @param {object} config webpack 設定オブジェクト
+     * @param {object} ctx 次のキーを持つオブジェクト（loaders を除きすべてブーリアン）: isDev、isClient、isServer、loaders
+     */
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        config.devtool = 'source-map';
+      }
+      config.resolve.alias['@'] = path.join(__dirname);
+      config.resolve.alias['~'] = path.join(__dirname);
+    },
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
