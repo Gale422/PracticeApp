@@ -1,17 +1,34 @@
-from pathlib import Path
+#!/bin/env python
+# -*- coding: utf-8 -*-
 from .baseHandler import BaseHandler
 from .domain.dbConnector import DbConnector
+from datetime import datetime
 import json
 
 
-class MainHandler(BaseHandler):
-    def prepare(self):
-        self.render("index.html")
+def json_datetime_serial(obj):
+    # datetime型のみ処理対象とする
+    if isinstance(obj, datetime):
+        return obj.strftime('%Y-%m-%d %H:%M:%S')
+    raise TypeError(repr(o) + " is not JSON serializable")
 
 
 class DataHandler(BaseHandler):
     def get(self):
         # search = self.get_argument('search', None)
         # print("search={}".format(search))
-        result = DbConnector().getAll()
-        self.write(json.dumps(result))
+        result = DbConnector().getToDoAll()
+        self.write(json.dumps(result, default=json_datetime_serial))
+
+
+class ToDoDetailHandler(BaseHandler):
+    def options(self):
+        pass
+
+    def post(self):
+        self.write("test")
+
+    def get(self):
+        toDoId = self.get_argument('id', None)
+        result = DbConnector().getToDoDetailByToDoId(toDoId)
+        self.write(json.dumps(result, default=json_datetime_serial))
