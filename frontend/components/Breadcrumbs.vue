@@ -3,13 +3,13 @@
     <v-breadcrumbs :items="items" divider="/">
       <template #item="{ item }">
         <li>
-          <NuxtLink
+          <nuxt-link
             :to="item.href"
             :disabled="item.disabled"
             class="breadcrumbItems"
           >
             {{ item.text }}
-          </NuxtLink>
+          </nuxt-link>
         </li>
       </template>
     </v-breadcrumbs>

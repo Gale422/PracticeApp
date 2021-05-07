@@ -1,6 +1,15 @@
 <template>
   <v-container>
-    <page-title>Home</page-title>
+    <v-container>
+      <v-row align="baseline" justify="space-between">
+        <v-col><page-title>Home</page-title></v-col>
+        <v-spacer />
+        <v-col class="actions">
+          <v-btn>追加</v-btn>
+          <v-btn>削除</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-row justify="center" align="center">
       <v-data-table
         :show-select="true"
@@ -12,7 +21,9 @@
         class="data-table"
       >
         <template #[`item.title`]="{ item }">
-          <NuxtLink :to="`todo/details/${item.id}`">{{ item.title }}</NuxtLink>
+          <nuxt-link :to="`todo/details/${item.id}`">
+            {{ item.title }}
+          </nuxt-link>
         </template>
         <template #[`item.tags`]="{ item }">
           <v-chip-group>
@@ -88,6 +99,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.actions {
+  text-align: right;
+}
 .data-table {
   width: 100%;
 }
