@@ -1,37 +1,107 @@
 <template>
   <div>
-    <page-title>{{ $data.title }}</page-title>
+    <breadcrumbs :items="breadcrumbs" />
+    <page-title>{{ $data.todoData.title }}</page-title>
     <v-chip-group>
-      <v-chip v-for="tag in $data.tags" :key="tag.name">
+      <v-chip v-for="tag in $data.todoData.tags" :key="tag.name">
         {{ tag.name }}
       </v-chip>
     </v-chip-group>
-    <div>予定時刻: {{ $data.start_time }} 〜 {{ $data.end_time }}</div>
-    <div>場所: {{ $data.location }}</div>
-    <p>{{ $data.detail }}</p>
-    <p>{{ $data.other }}</p>
+    <v-card>
+      <v-card-text>
+        <v-container>
+          <v-row
+            align="center"
+            align-content="space-around"
+            dense
+            justify="start"
+          >
+            <v-col cols="1" class="title-column">予定時刻</v-col>
+            <v-col>{{ showTimeSchedule }}</v-col>
+          </v-row>
+          <v-row
+            align="center"
+            align-content="space-around"
+            dense
+            justify="start"
+          >
+            <v-col cols="1" class="title-column">場所</v-col>
+            <v-col>{{ showLocation }}</v-col>
+          </v-row>
+          <v-row
+            align="center"
+            align-content="space-around"
+            dense
+            justify="start"
+          >
+            <v-col cols="1" class="title-column">詳細</v-col>
+            <v-col>{{ $data.todoData.detail }}</v-col>
+          </v-row>
+          <v-row
+            align="center"
+            align-content="space-around"
+            dense
+            justify="start"
+          >
+            <v-col cols="1" class="title-column">作成日時</v-col>
+            <v-col>{{ showTimeStamp }}</v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import PageTitle from '@/components/PageTitle.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 export default Vue.extend({
-  components: { PageTitle },
+  components: { PageTitle, Breadcrumbs },
   data(): {
     id: number | undefined;
-    title: string | undefined;
-    tags: Array<String> | undefined;
-    detail: string | undefined;
-    other: object | undefined;
+    todoData: Object;
   } {
     return {
       id: undefined,
-      title: undefined,
-      tags: undefined,
-      detail: undefined,
-      other: undefined,
+      todoData: {
+        title: '',
+      },
     };
+  },
+  computed: {
+    showTimeSchedule(): string {
+      const todoData: any = this.$data.todoData;
+      if (!(todoData && (todoData.start_time || todoData.end_time))) {
+        return '未定';
+      }
+      return `${this.formatDate(todoData.start_time) || '未定'} 〜 ${
+        this.formatDate(todoData.end_time) || '未定'
+      }`;
+    },
+    showLocation(): string {
+      return `${this.$data.todoData.location || '未定'}`;
+    },
+    showTimeStamp(): string {
+      const inserted: string = this.formatDate(this.$data.todoData.inserted_at);
+      const updated: string = this.formatDate(this.$data.todoData.updated_at);
+      return `${inserted} ${
+        inserted !== updated ? `（最終更新時: ${updated} ）` : ``
+      }`;
+    },
+    breadcrumbs(): Array<Object> {
+      return [
+        {
+          text: 'Home',
+          href: '/',
+        },
+        {
+          text: 'TODO 詳細',
+          href: `/todo/details/${this.$data.id}`,
+          disabled: true,
+        },
+      ];
+    },
   },
   mounted(): void {
     this.$data.id = this.$route.params.id;
@@ -40,23 +110,31 @@ export default Vue.extend({
   methods: {
     async getDetail(): Promise<void> {
       // .post('/todo/detail', { id: this.$data.id })
-      const data: {
-        title: string;
-        tags: Array<String>;
-        detail: string;
-      } = await this.$axios
+      this.$data.todoData = await this.$axios
         .get('/todo/detail', {
           params: {
             id: this.$data.id,
           },
         })
         .then((result) => result.data)
-        .catch((): any[] => []);
-      this.$data.title = data.title;
-      this.$data.tags = data.tags;
-      this.$data.detail = data.detail;
-      this.$data.other = data;
+        .catch((): object => {
+          return {};
+        });
+    },
+    formatDate(strDate: string): string {
+      if (!strDate) {
+        return '';
+      }
+      const date: Array<string> = strDate
+        .split(/[-\s:]/)
+        .map((e) => `${parseInt(e)}`.padStart(2));
+      return `${date[0]}年 ${date[1]}月 ${date[2]}日 ${date[3]}時 ${date[4]}分`;
     },
   },
 });
 </script>
+<style scoped>
+.title-column {
+  text-align: center;
+}
+</style>
