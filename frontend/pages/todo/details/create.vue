@@ -28,6 +28,10 @@
                 </v-chip>
               </v-chip-group>
             </v-col>
+            <v-spacer />
+            <v-col cols="1">
+              <v-btn @click="showCreateTagDialog">タグ作成</v-btn>
+            </v-col>
           </v-row>
           <v-row
             align="center"
@@ -111,6 +115,9 @@ export default Vue.extend({
         .get('/tags')
         .then((result) => result.data)
         .catch(() => {});
+    },
+    showCreateTagDialog() {
+      // TODO: タグを作成するダイアログを表示するようにする
     },
   },
 });
