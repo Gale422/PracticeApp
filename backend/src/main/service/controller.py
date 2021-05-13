@@ -22,9 +22,6 @@ class DataHandler(BaseHandler):
 
 
 class ToDoDetailHandler(BaseHandler):
-    def options(self):
-        pass
-
     def post(self):
         self.write("test")
 
@@ -32,3 +29,7 @@ class ToDoDetailHandler(BaseHandler):
         toDoId = self.get_argument('id', None)
         result = DbConnector().getToDoDetailByToDoId(toDoId)
         self.write(json.dumps(result, default=json_datetime_serial))
+
+class TagsHandler(BaseHandler):
+    def get(self):
+        self.write(json.dumps(DbConnector().getTagAll(), default=json_datetime_serial))

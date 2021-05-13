@@ -20,6 +20,7 @@ class Application(tornado.web.Application):
         handlers = [
             (u"/data", controller.DataHandler),
             (u"/todo/detail", controller.ToDoDetailHandler),
+            (u"/tags", controller.TagsHandler),
         ]
         settings = dict(
             debug=True,

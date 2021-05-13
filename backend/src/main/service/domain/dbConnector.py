@@ -41,6 +41,13 @@ class DbConnector:
         print(todo)
         return todo
 
+    def getTagAll(self):
+        cur = self.__get_cursor()
+        cur.execute("SELECT id, name FROM tag ORDER BY id ASC")
+        rows = cur.fetchall()
+        cur.close()
+        return rows
+
     def getTagsByToDoId(self, toDoId):
         cur = self.__get_cursor()
         cur.execute(
