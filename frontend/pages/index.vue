@@ -5,7 +5,7 @@
         <v-col><page-title>Home</page-title></v-col>
         <v-spacer />
         <v-col class="actions">
-          <v-btn>追加</v-btn>
+          <v-btn to="todo/details/create" nuxt>追加</v-btn>
           <v-btn>削除</v-btn>
         </v-col>
       </v-row>
@@ -64,8 +64,16 @@ export default Vue.extend({
     headers(): DataTableHeader[] {
       return [
         new DataTableHeader('タイトル', 'title'),
-        new DataTableHeader('開始時刻', 'start_time', new Option('center')),
-        new DataTableHeader('終了時刻', 'end_time', new Option('center')),
+        new DataTableHeader(
+          '開始時刻',
+          'start_time',
+          new Option('center', undefined, true)
+        ),
+        new DataTableHeader(
+          '終了時刻',
+          'end_time',
+          new Option('center', undefined, true)
+        ),
         new DataTableHeader('タグ', 'tags', new Option('center', 400)),
         new DataTableHeader('', 'zip', new Option('center', 30, false, false)),
       ];
