@@ -10,7 +10,7 @@ def json_datetime_serial(obj):
     # datetime型のみ処理対象とする
     if isinstance(obj, datetime):
         return obj.strftime('%Y-%m-%d %H:%M:%S')
-    raise TypeError(repr(o) + " is not JSON serializable")
+    raise TypeError(repr(obj) + " is not JSON serializable")
 
 
 class DataHandler(BaseHandler):
