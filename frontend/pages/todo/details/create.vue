@@ -41,11 +41,11 @@
           >
             <v-col cols="1" class="title-column">予定時刻</v-col>
             <v-col>
-              <v-text-field v-model="todoData.start_time" />
+              <date-time-field v-model="todoData.start_time" />
             </v-col>
             <v-col cols="1" align-self="center" class="text-center">〜</v-col>
             <v-col>
-              <v-text-field v-model="todoData.end_time" />
+              <date-time-field v-model="todoData.end_time" />
             </v-col>
           </v-row>
           <v-row
@@ -64,7 +64,7 @@
             justify="start"
           >
             <v-col cols="1" class="title-column">詳細</v-col>
-            <v-col><v-textarea v-model="todoData.detail" /></v-col>
+            <v-col><v-textarea v-model="todoData.detail" outlined /></v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -76,8 +76,9 @@
 import Vue from 'vue';
 import PageTitle from '@/components/PageTitle.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import DateTimeField from '~/components/DateTimeField.vue';
 export default Vue.extend({
-  components: { PageTitle, Breadcrumbs },
+  components: { PageTitle, Breadcrumbs, DateTimeField },
   data(): {
     todoData: Object;
     tags: Array<Object>;
