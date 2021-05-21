@@ -21,8 +21,10 @@ class BaseHandler(tornado.web.RequestHandler):
         print(self.request)
         if origin in valid_origin_list:
             self.set_header("Access-Control-Allow-Origin", origin)
-            self.set_header("Access-Control-Allow-Headers", "origin, x-requested-with, Content-Type")
-            self.set_header('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE,OPTIONS')
+            self.set_header("Access-Control-Allow-Headers",
+                            "origin, x-requested-with, Content-Type")
+            self.set_header('Access-Control-Allow-Methods',
+                            'POST,GET,PUT,DELETE,OPTIONS')
 
     def options(self):
         pass

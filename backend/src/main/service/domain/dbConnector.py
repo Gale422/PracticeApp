@@ -22,7 +22,8 @@ class DbConnector:
         # カーソル作成
         cur = self.__get_cursor()
         # SQL実行
-        cur.execute("SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list ORDER BY id asc")
+        cur.execute(
+            "SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list ORDER BY id asc")
         # 全てのデータを取得
         rows = cur.fetchall()
         cur.close()
@@ -34,7 +35,8 @@ class DbConnector:
         # カーソル作成
         cur = self.__get_cursor()
         # SQL実行
-        cur.execute("SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list WHERE id = %s", (id, ))
+        cur.execute(
+            "SELECT id, title, start_time, end_time, location, detail, inserted_at, updated_at FROM todo_list WHERE id = %s", (id, ))
         # データを1件取得
         todo = cur.fetchone()
         todo["tags"] = self.getTagsByToDoId(todo.get("id"))
