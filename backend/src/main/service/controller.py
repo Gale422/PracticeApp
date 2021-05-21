@@ -20,7 +20,6 @@ class DataHandler(BaseHandler):
         result = DbConnector().getToDoAll()
         self.write(json.dumps(result, default=json_datetime_serial))
 
-
 class ToDoDetailHandler(BaseHandler):
     def post(self):
         self.write("test")
