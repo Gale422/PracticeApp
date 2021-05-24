@@ -10,7 +10,7 @@ import tornado.ioloop
 import tornado.web
 from tornado.options import define, options
 
-from .service import controller
+from service import controller
 
 define("port", default=8888, type=int)
 
